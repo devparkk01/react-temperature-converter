@@ -1,23 +1,30 @@
+import React , {useState} from "react" ; 
 import logo from './logo.svg';
 import './App.css';
+import Celsius from "./components/Celsius"
+import Fahrenheit from './components/Fahrenheit';
+
+const tempConverter = (tempInC) => {
+  const input = parseFloat(tempInC);
+  if (Number.isNaN(input)) {
+    return '';
+  }
+  const output =  (input * 9 / 5) + 32;
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
+}
 
 function App() {
+  const [temp , setTemp] = useState("");  
+
+  const getTempCelsius = (tempInC) => {
+    // console.log(tempInC) ;
+    setTemp(tempConverter(tempInC)) ; 
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Celsius onSelectTemp = {getTempCelsius}></Celsius>
+      <Fahrenheit temp = {temp}></Fahrenheit>
     </div>
   );
 }
